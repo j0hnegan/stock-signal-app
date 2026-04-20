@@ -19,10 +19,10 @@ Build phases in order. Complete all tasks in a phase before moving to the next. 
 
 ## Phase 1: Backend skeleton
 
-- [ ] Initialize Python project, create `backend/requirements.txt` with: `fastapi`, `uvicorn[standard]`, `sqlalchemy`, `apscheduler`, `pydantic`, `python-dotenv`, `httpx`, `yfinance`, `finnhub-python`, `pytest`
-- [ ] Create `backend/app/main.py` — FastAPI app with health-check endpoint `/health`
-- [ ] Create `backend/app/db.py` — SQLite setup with SQLAlchemy engine + session
-- [ ] Create `backend/app/models.py` — define core models:
+- [x] Initialize Python project, create `backend/requirements.txt` with: `fastapi`, `uvicorn[standard]`, `sqlalchemy`, `apscheduler`, `pydantic`, `python-dotenv`, `httpx`, `yfinance`, `finnhub-python`, `pytest`
+- [x] Create `backend/app/main.py` — FastAPI app with health-check endpoint `/health`
+- [x] Create `backend/app/db.py` — SQLite setup with SQLAlchemy engine + session
+- [x] Create `backend/app/models.py` — define core models:
   - `Stock` (ticker, name, sector, market_cap, avg_volume)
   - `Quote` (stock_id, timestamp, price, volume)
   - `NewsItem` (stock_id, timestamp, headline, source, url, sentiment)
@@ -31,9 +31,9 @@ Build phases in order. Complete all tasks in a phase before moving to the next. 
   - `Contract` (stock_id, timestamp, agency, amount, description)
   - `Score` (stock_id, timestamp, watchlist_score, trigger_score, signals_json)
   - `MacroSnapshot` (timestamp, spy_price, qqq_price, vix, ten_year_yield, regime_score)
-- [ ] Create `backend/app/scheduler.py` — APScheduler setup with empty job registry
-- [ ] Wire scheduler startup/shutdown into FastAPI lifespan
-- [ ] Verify: running `uvicorn app.main:app --reload` starts cleanly; `/health` returns OK
+- [x] Create `backend/app/scheduler.py` — APScheduler setup with empty job registry
+- [x] Wire scheduler startup/shutdown into FastAPI lifespan
+- [x] Verify: running `uvicorn app.main:app --reload` starts cleanly; `/health` returns OK
 
 ---
 
