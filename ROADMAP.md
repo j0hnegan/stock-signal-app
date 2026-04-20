@@ -39,19 +39,19 @@ Build phases in order. Complete all tasks in a phase before moving to the next. 
 
 ## Phase 2: Data sources — universe and prices
 
-- [ ] Create `backend/app/sources/finnhub.py`:
+- [x] Create `backend/app/sources/finnhub.py`:
   - Fetch US stock universe (`/stock/symbol?exchange=US`)
   - Filter to market cap > $2B and ADV > $50M (using `/stock/profile2` and `/stock/metric`)
   - Function: `refresh_universe()` — populates `Stock` table
-  - Function: `fetch_quote(ticker)` — returns current price + volume
-- [ ] Create `backend/app/sources/yfinance.py`:
+  - Function: `fetch_quote(ticker)` — returns current price + volume *(Finnhub `/quote` doesn't include volume on free tier — volume comes from yfinance batch path)*
+- [x] Create `backend/app/sources/yfinance_source.py` *(named with `_source` suffix to avoid shadowing the `yfinance` package)*:
   - Function: `fetch_history(ticker, period)` — returns historical OHLCV DataFrame
-  - Function: `fetch_batch_quotes(tickers)` — efficient bulk quote
-- [ ] Add scheduled jobs:
-  - Universe refresh — weekly Sunday 6 AM ET
-  - Quote refresh — every 5 minutes during market hours
-- [ ] Unit tests for each source module (mock HTTP responses)
-- [ ] Verify: after manual trigger, `Stock` table has ~1,000 rows; `Quote` table populates every 5 min
+  - Function: `fetch_batch_quotes(tickers)` — efficient bulk quote (chunked at 200)
+- [x] Add scheduled jobs:
+  - ~~Universe refresh — weekly Sunday 6 AM ET~~ → **manual-only via `POST /admin/refresh-universe`**; weekly cron dropped (universe barely changes; refresh costs 2–3 hours of free-tier API calls)
+  - Quote refresh — every 5 minutes during market hours (+ hourly off-hours)
+- [x] Unit tests for each source module (mock HTTP responses)
+- [x] Verify: after manual trigger, `Stock` table has ~1,000 rows; `Quote` table populates every 5 min *(structurally verified — endpoint returns `started`, job runs and logs correctly with empty universe; full verification pending real `FINNHUB_API_KEY`)*
 
 ---
 
